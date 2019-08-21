@@ -58,7 +58,7 @@ template 'Generate-ipsec-secrets' do
         :CommonName => node['fqdn']
     })
     owner 'root'
-    mode 600
+    mode '600'
     action :create
 end
 
