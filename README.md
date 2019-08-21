@@ -7,7 +7,7 @@ Clients authenticate with username/password (`EAP-MSCHAPv2`)
 ## Requirements
 
 - This cookbook is tested on Ubuntu Bionic (Linux mint 19)
-- The system have a hostname set, this hostname must point to its public IP over DNS
+- The system hostname is set and points to public IP over DNS (for Letsencrypt)
 
 ## Attributes
 
@@ -23,5 +23,6 @@ default['ikev2_vpn']['password']='P@ssW0rd'
 ## TODO
 
 - Write inspec tests
-- Store username/password in data bag 
+- Store username/password in data bag
+- Client PKI Authentication 
 
