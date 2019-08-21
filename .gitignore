@@ -21,4 +21,6 @@ Berksfile.lock
 .zero-knife.rb
 Policyfile.lock.json
 local-mode-cache/*
-test/*
+Policyfile.rb
+solo.rb
+solo.json
