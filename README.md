@@ -1,7 +1,7 @@
 # ikev2_vpn_cookbook
 
-IKEv2 VPN with Strongswan.
-Uses LetsEncrypt (certbot) to issue a trusted server certificate
+IKEv2 VPN with Strongswan. 
+Uses LetsEncrypt (certbot) to issue a trusted server certificate  
 Clients authenticate with username/password (`EAP-MSCHAPv2`)
 
 ## Requirements
