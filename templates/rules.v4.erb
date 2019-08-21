@@ -1,0 +1,37 @@
+*nat
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:IPSEC - [0:0]
+-A IPSEC -s <%= @Subnet %> -m policy --dir out --pol ipsec -j ACCEPT
+-A IPSEC -s <%= @Subnet %> -j MASQUERADE
+-A POSTROUTING -o <%= @Interface %> -j IPSEC 
+COMMIT
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:IPSEC - [0:0]
+-A IPSEC -s <%= @Subnet %> -p tcp -m policy --dir in --pol ipsec -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
+-A FORWARD -o <%= @Interface %> -j IPSEC 
+COMMIT
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:IPSEC_INPUT - [0:0]
+:IPSEC_FORWARD - [0:0]
+-A IPSEC_INPUT -p udp --dport 4500 -j ACCEPT
+-A IPSEC_INPUT -p udp --dport 500 -j ACCEPT 
+-A IPSEC_INPUT -p ah -j ACCEPT
+-A IPSEC_INPUT -p esp -j ACCEPT
+-A IPSEC_INPUT -m conntrack --ctstate NEW,UNTRACKED -j DROP
+-A IPSEC_FORWARD -s <%= @Subnet %> -p esp -m policy --dir in --pol ipsec -j ACCEPT
+-A IPSEC_FORWARD -d <%= @Subnet %> -p esp -m policy --dir out --pol ipsec -j ACCEPT
+-A IPSEC_FORWARD -m conntrack --ctstate NEW,UNTRACKED -j DROP 
+-A INPUT -i <%= @Interface %> -j IPSEC_INPUT
+-A FORWARD -j IPSEC_FORWARD
+COMMIT
