@@ -22,13 +22,13 @@ sysctl 'ipv4-enable-reverse-path-filtering' do
 end
 
 sysctl 'ipv4-never-accept-redirects' do
-    key 'net.ipv4.conf.all.accept_redirect'
+    key 'net.ipv4.conf.all.accept_redirects'
     value 0
     action :apply
 end
 
 sysctl 'ipv4-never-send-redirects' do
-    key 'net.ipv4.conf.all.send_redirect'
+    key 'net.ipv4.conf.all.send_redirects'
     value 0
     action :apply
 

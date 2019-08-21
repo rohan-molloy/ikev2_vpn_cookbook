@@ -6,7 +6,6 @@
 
 apt_update 'update'
 
-include_recipe 'ikev2_vpn::packages'
 include_recipe 'ikev2_vpn::letsencrypt'
 include_recipe 'ikev2_vpn::config_ipsec'
 include_recipe 'ikev2_vpn::iptables'

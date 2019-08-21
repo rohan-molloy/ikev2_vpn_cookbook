@@ -18,7 +18,7 @@ template 'Generate-ipsec-config' do
     path '/etc/ipsec.conf'
     source 'ipsec.conf.erb'
     variables ({
-        strictcrlpolicy => 'no',
+        :strictcrlpolicy => 'no',
         :uniqueids => 'never',
         :conn_name => 'roadwarrior',
         :auto => 'add',
@@ -28,7 +28,7 @@ template 'Generate-ipsec-config' do
         :forceencaps => 'yes',
         :fragmentation => 'yes',
         :ike => 'aes256gcm16-prfsha384-ecp521,aes256gcm16-prfsha384-ecp384!',
-        :esp => 'aes256gcm16-ecp521,aes256gcm16-ecp384!'.
+        :esp => 'aes256gcm16-ecp521,aes256gcm16-ecp384!',
         :dpdaction => 'clear',
         :dpddelay => '900s',
         :rekey => 'no',
@@ -40,7 +40,7 @@ template 'Generate-ipsec-config' do
         :right => '%any',
         :rightid => '%any',
         :rightauth => 'eap-mschapv2',
-        :eap_identity => '%any'
+        :eap_identity => '%any',
         :rightdns => node['ikev2_vpn']['dns'],
         :rightsourceip => node['ikev2_vpn']['subnet'],
         :rightsendcert => 'never'
@@ -53,10 +53,11 @@ template 'Generate-ipsec-secrets' do
     path '/etc/ipsec.secrets'
     source 'ipsec.secrets.erb'
     variables ({
-        :Password => MixLib::ShellOut.new('pwgen -n1 --secure 16').stdout,
+        :Username => node['ikev2_vpn']['username'],
+        :Password => node['ikev2_vpn']['password'],
         :CommonName => node['fqdn']
     })
-    owner root
+    owner 'root'
     mode 600
     action :create
 end

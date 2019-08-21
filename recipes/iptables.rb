@@ -28,7 +28,7 @@ end
 
 service 'Reload-iptables-service' do
     service_name 'netfilter-persistent'
-    action [:enable, :start]
+    action [:enable, :restart]
 end
 
 

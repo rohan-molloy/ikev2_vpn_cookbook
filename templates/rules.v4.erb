@@ -31,7 +31,6 @@ COMMIT
 -A IPSEC_INPUT -m conntrack --ctstate NEW,UNTRACKED -j DROP
 -A IPSEC_FORWARD -s <%= @Subnet %> -p esp -m policy --dir in --pol ipsec -j ACCEPT
 -A IPSEC_FORWARD -d <%= @Subnet %> -p esp -m policy --dir out --pol ipsec -j ACCEPT
--A IPSEC_FORWARD -m conntrack --ctstate NEW,UNTRACKED -j DROP 
 -A INPUT -i <%= @Interface %> -j IPSEC_INPUT
 -A FORWARD -j IPSEC_FORWARD
 COMMIT
