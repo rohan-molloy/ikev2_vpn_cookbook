@@ -32,13 +32,13 @@ COMMIT
 -A WAN_LOCAL -p udp -m multiport --destination-ports 4500,500 -j ACCEPT
 -A WAN_LOCAL -p ah -j ACCEPT
 -A WAN_LOCAL -p esp -j ACCEPT
-<% if node[:ikev2_vpn][:iptables][:allow_external_ssh]==true -%>
+<% if node['ikev2_vpn']['iptables']['allow_external_ssh']==true -%>
 -A WAN_LOCAL -p tcp --dport 22 -j ACCEPT
 <% end -%>
 -A WAN_LOCAL -m conntrack --ctstate NEW,UNTRACKED -j DROP
 -A VPN_LOCAL -p icmp -j ACCEPT
 -A VPN_LOCAL -p tcp --dport ssh -j ACCEPT
-<% if node[:ikev2_vpn][:iptables][:allow_all_from_vpn]==false -%>
+<% if node['ikev2_vpn']['iptables']['allow_all_from_vpn']==false -%>
 -A VPN_LOCAL -m conntrack --ctstate NEW,UNTRACKED -j DROP
 <% end -%>
 -A VPN_LOCAL -j RETURN

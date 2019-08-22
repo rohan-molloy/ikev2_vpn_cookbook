@@ -22,5 +22,3 @@ Berksfile.lock
 Policyfile.lock.json
 local-mode-cache/*
 Policyfile.rb
-solo.rb
-solo.json
