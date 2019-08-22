@@ -32,12 +32,12 @@ COMMIT
 -A WAN_LOCAL -p udp -m multiport --destination-ports 4500,500 -j ACCEPT
 -A WAN_LOCAL -p ah -j ACCEPT
 -A WAN_LOCAL -p esp -j ACCEPT
-<% if @DefaultDropWAN == true %>
+<% if node[:ikev2_vpn][:default_drop_wan]==true %>
 -A WAN_LOCAL -m conntrack --ctstate NEW,UNTRACKED -j DROP
 <% end %>
 -A VPN_LOCAL -p icmp -j ACCEPT
 -A VPN_LOCAL -p tcp --dport ssh -j ACCEPT
-<% if @DefaultDropVPN == true %>
+<% if node[:ikev2_vpn][:default_drop_vpn]==true %>
 -A VPN_LOCAL -m conntrack --ctstate NEW,UNTRACKED -j DROP
 <% end %> 
 -A VPN_LOCAL -j RETURN 
