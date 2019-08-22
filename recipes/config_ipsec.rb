@@ -36,6 +36,7 @@ template 'Generate-ipsec-config' do
         :rightsendcert => 'never'
     })
     owner 'root'
+    mode '600'
     action :create
 end
 
