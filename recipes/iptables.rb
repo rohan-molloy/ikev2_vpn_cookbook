@@ -22,60 +22,18 @@ template 'Generate-iptables-rules' do
     mode '0600'
     variables ({
         :Interface => node['network']['default_interface'],
-        :Subnet => node['ikev2_vpn']['subnet']
+        :Subnet => node['ikev2_vpn']['subnet'],
+        :DefaultDropWAN => node['ikev2_vpn']['default_drop_wan'],
+        :DefaultDropVPN => node['ikev2_vpn']['default_drop_vpn']
     })
+end
+
+execute 'Apply-iptables-rules' do
+    command '/sbin/iptables-restore < /etc/iptables/rules.v4'
+    action :run
 end
 
 service 'Reload-iptables-service' do
     service_name 'netfilter-persistent'
     action [:enable, :restart]
 end
-
-
-# execute 'nat_ipsec_policy' do
-#     command "/sbin/iptables -t nat -A POSTROUTING -s #{subnet} -o #{iface}  -m policy --pol ipsec --dir out -j ACCEPT"
-#     action :run
-# end
-
-# execute 'nat_ipsec_masquerade' do
-#     command "/sbin/iptables -t nat -A POSTROUTING -s #{subnet} -o #{iface}  -j MASQUERADE"
-#     action :run
-# end
-
-# execute 'mangle_ipsec_reduce_mtu' do
-#     command "/sbin/iptables -t mangle -A FORWARD  -m policy --pol ipsec --dir in -s #{subnet} -o #{iface} -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360"
-#     action :run
-# end
-
-# execute 'filter_ipsec_forward_1' do
-#     command "/sbin/iptables -t filter -A FORWARD -m policy --pol ipsec --dir in -p esp -s #{subnet} -j ACCEPT"
-#     action :run
-# end 
-
-# execute 'filter_ipsec_forward_2' do
-#     command "/sbin/iptables -t filter -A FORWARD -m policy --pol ipsec --dir out -p esp -d #{subnet} -j ACCEPT"
-#     action :run
-# end 
-
-# execute 'filter_ipsec_input_1' do
-#     command "/sbin/iptables -t filter -A INPUT -p udp --dport 500 -j ACCEPT"
-#     action :run
-# end 
-
-# execute 'filter_ipsec_input_2' do
-#     command "/sbin/iptables -t filter -A INPUT -p udp --dport 4500 -j ACCEPT"
-#     action :run
-# end 
-
-# execute 'filter_ipsec_input_3' do
-#     command "/sbin/iptables -t filter -A INPUT -p ah -j ACCEPT"
-#     action :run
-# end 
-
-# execute 'filter_ipsec_input_4' do
-#     command "/sbin/iptables -t filter -A INPUT -p esp -j ACCEPT"
-#     action :run
-# end 
-
-
-
