@@ -2,7 +2,7 @@
 # Cookbook:: ikev2_vpn
 # Recipe:: letsencrypt
 #
-# Copyright:: 2019, The Authors, All Rights Reserved.
+# Copyright:: 2019, Rohan Molloy, All Rights Reserved.
 
 apt_package 'Install-certbot' do
     package_name 'certbot'

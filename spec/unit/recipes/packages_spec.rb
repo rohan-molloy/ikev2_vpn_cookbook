@@ -2,7 +2,7 @@
 # Cookbook:: ikev2_vpn
 # Spec:: packages
 #
-# Copyright:: 2019, The Authors, All Rights Reserved.
+# Copyright:: 2019, Rohan Molloy, All Rights Reserved.
 
 require 'spec_helper'
 

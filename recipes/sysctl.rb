@@ -2,7 +2,7 @@
 # Cookbook:: ikev2_vpn
 # Recipe:: sysctl
 #
-# Copyright:: 2019, The Authors, All Rights Reserved.
+# Copyright:: 2019, Rohan Molloy, All Rights Reserved.
 
 sysctl 'ipv4-enable-forwarding' do
     key 'net.ipv4.ip_forward'

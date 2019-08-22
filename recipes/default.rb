@@ -2,7 +2,7 @@
 # Cookbook:: ikev2_vpn
 # Recipe:: default
 #
-# Copyright:: 2019, The Authors, All Rights Reserved.
+# Copyright:: 2019, Rohan Molloy, All Rights Reserved.
 
 apt_update 'update'
 include_recipe 'ikev2_vpn::install_ipsec'

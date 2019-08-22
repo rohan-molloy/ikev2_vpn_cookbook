@@ -2,7 +2,7 @@
 # Cookbook:: ikev2_vpn
 # Recipe:: config_ipsec
 #
-# Copyright:: 2019, The Authors, All Rights Reserved.
+# Copyright:: 2019, Rohan Molloy, All Rights Reserved.
 
 template 'Generate-ipsec-config' do
     path '/etc/ipsec.conf'
