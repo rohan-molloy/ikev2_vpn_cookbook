@@ -30,7 +30,7 @@ template 'Generate-ipsec-config' do
         :right => '%any',
         :rightid => '%any',
         :rightauth => 'eap-mschapv2',
-        :eap_identity => '%any',
+        :eap_identity => '%identity',
         :rightdns => node['ikev2_vpn']['dns'],
         :rightsourceip => node['ikev2_vpn']['subnet'],
         :rightsendcert => 'never'

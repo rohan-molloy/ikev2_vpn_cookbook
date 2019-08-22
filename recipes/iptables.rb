@@ -23,8 +23,8 @@ template 'Generate-iptables-rules' do
     variables ({
         :Interface => node['network']['default_interface'],
         :Subnet => node['ikev2_vpn']['subnet'],
-        :DefaultDropWAN => node['ikev2_vpn']['default_drop_wan'],
-        :DefaultDropVPN => node['ikev2_vpn']['default_drop_vpn']
+        :WanInputDefault => node['ikev2_vpn']['iptables']['wan_input_default'],
+        :VpnInputDefault => node['ikev2_vpn']['iptables']['vpn_input_default']
     })
 end
 
