@@ -34,13 +34,13 @@ end
 execute 'Execute-letsencrypt-without-email' do
     command '/usr/bin/certbot certonly --register-unsafely-without-email --no-eff-email --non-interactive --agree-tos --standalone -d '+node['fqdn']
     action :run
-    only_if { node['ikev2_vpn']['le_email'].nil? }
+    only_if { node['ikev2_vpn']['le_email']=='' }
 end
 
 execute 'Execute-letsencrypt-with-email' do
     command '/usr/bin/certbot certonly -m '+node['ikev2_vpn']['le_email']+' --non-interactive --agree-tos --standalone -d '+node['fqdn']
     action :run
-    not_if { node['ikev2_vpn']['le_email'].nil? }
+    not_if { node['ikev2_vpn']['le_email']=='' }
 end
 
 execute 'Copy-cert' do
