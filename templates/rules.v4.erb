@@ -32,7 +32,7 @@ COMMIT
 -A WAN_LOCAL -p udp -m multiport --destination-ports 4500,500 -j ACCEPT
 -A WAN_LOCAL -p ah -j ACCEPT
 -A WAN_LOCAL -p esp -j ACCEPT
--A WAN_LOCAL -j -m conntrack --ctstate NEW,UNTRACKED -j <%= @WanInputDefault %>
+-A WAN_LOCAL -m conntrack --ctstate NEW,UNTRACKED -j <%= @WanInputDefault %>
 -A VPN_LOCAL -p icmp -j ACCEPT
 -A VPN_LOCAL -p tcp --dport ssh -j ACCEPT
 -A VPN_LOCAL -m conntrack --ctstate NEW,UNTRACKED -j <%= @VpnInputDefault %>
