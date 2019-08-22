@@ -21,7 +21,6 @@ describe file('/etc/iptables/rules.v4') do
   its('mode') { should cmp '0600'}
 end
 
-
 describe iptables(table:'filter') do
   it { should have_rule('-P FORWARD ACCEPT') }
   it { should have_rule('-N VPN_LOCAL') }
@@ -34,7 +33,5 @@ describe iptables(table:'filter') do
   it { should have_rule('-A WAN_LOCAL -p ah -j ACCEPT') }
   it { should have_rule('-A WAN_LOCAL -p esp -j ACCEPT') }
   it { should have_rule('-A WAN_LOCAL -m conntrack --ctstate NEW,UNTRACKED -j DROP') }
-  it { should have_rule('-A INPUT -i '+Mixlib::ShellOut.new("ip route list default | head -n1 | awk '{print $5}'").run_command.stdout.strip+' -j WAN_LOCAL') }
+  it { should have_rule('-A INPUT -i '+Mixlib::ShellOut.new("ip r l default|head -n1|awk '{print $5}'").run_command.stdout.strip+' -j WAN_LOCAL') }
 end
-
-
