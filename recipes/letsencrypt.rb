@@ -22,7 +22,6 @@ template 'Generate-letsencrypt-config' do
     variables ({
         :preferred_challenges => 'http',
         :rsa_key_size => '4096',
-        :email => node['ikev2_vpn']['le_email'],
         :domains => node['fqdn'],
         :pre_hook => '/sbin/iptables --insert INPUT -p tcp --dport 80 -j ACCEPT',
         :post_hook => '/sbin/iptables --delete INPUT -p tcp --dport 80 -j ACCEPT',
@@ -32,17 +31,29 @@ template 'Generate-letsencrypt-config' do
     action :create
 end
 
-execute 'Execute-letsencrypt2' do
-    command '/usr/bin/certbot certonly --non-interactive --agree-tos --standalone -d '+node['fqdn']
+execute 'Execute-letsencrypt-without-email' do
+    command '/usr/bin/certbot certonly --register-unsafely-without-email --no-eff-email --non-interactive --agree-tos --standalone -d '+node['fqdn']
     action :run
+    only_if { node['ikev2_vpn']['le_email'].nil? }
+end
+
+execute 'Execute-letsencrypt-with-email' do
+    command '/usr/bin/certbot certonly -m '+node['ikev2']['le_email']+' --non-interactive --agree-tos --standalone -d '+node['fqdn']
+    action :run
+    not_if { node['ikev2_vpn']['le_email'].nil? }
 end
 
 execute 'Copy-cert' do
-    command "cp /etc/letsencrypt/live/#{node['fqdn']}/cert.pem /etc/ipsec.d/certs/cert.pem"
+    command 'cp /etc/letsencrypt/live/'+node['fqdn']+'/cert.pem /etc/ipsec.d/certs/cert.pem'
+    action :run
 end
+
 execute 'Copy-chain' do
-    command "cp /etc/letsencrypt/live/#{node['fqdn']}/chain.pem /etc/ipsec.d/cacerts/chain.pem"
+    command 'cp /etc/letsencrypt/live/'+node['fqdn']+'/chain.pem /etc/ipsec.d/cacerts/chain.pem'
+    action :run
 end
+
 execute 'Copy-key' do
-    command "cp /etc/letsencrypt/live/#{node['fqdn']}/privkey.pem /etc/ipsec.d/private/privkey.pem"
+    command 'cp /etc/letsencrypt/live/'+node['fqdn']+'/privkey.pem /etc/ipsec.d/private/privkey.pem'
+    action :run
 end
