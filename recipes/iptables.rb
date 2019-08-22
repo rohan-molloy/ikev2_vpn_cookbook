@@ -5,7 +5,7 @@
 # Copyright:: 2019, Rohan Molloy, All Rights Reserved.
 
 apt_package 'Install-netfilter-persistent' do
-    package_name 'netfilter-persistent'
+    package_name %w(netfilter-persistent iptables-persistent)
     action :install
 end
 
@@ -22,9 +22,7 @@ template 'Generate-iptables-rules' do
     mode '0600'
     variables ({
         :Interface => node['network']['default_interface'],
-        :Subnet => node['ikev2_vpn']['subnet'],
-        :WanInputDefault => node['ikev2_vpn']['iptables']['wan_input_default'],
-        :VpnInputDefault => node['ikev2_vpn']['iptables']['vpn_input_default']
+        :Subnet => node['ikev2_vpn']['subnet']
     })
 end
 
