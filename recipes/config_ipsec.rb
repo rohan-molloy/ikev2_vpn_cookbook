@@ -9,11 +9,6 @@ apt_package 'Install-strongswan' do
     action :install
 end
 
-apt_package 'Install-pwgen' do
-    package_name 'pwgen'
-    action :install
-end
-
 template 'Generate-ipsec-config' do
     path '/etc/ipsec.conf'
     source 'ipsec.conf.erb'
@@ -60,9 +55,4 @@ template 'Generate-ipsec-secrets' do
     owner 'root'
     mode '600'
     action :create
-end
-
-service 'Restart-ipsec-service' do
-    service_name 'ipsec'
-    action :restart
 end
