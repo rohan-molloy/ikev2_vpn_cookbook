@@ -17,7 +17,7 @@ end
 
 describe file('/etc/iptables/rules.v4') do
   it { should exist }
-  it { should_be_owned_by 'root'}
+  it { should be_owned_by 'root'}
   its('mode') { should cmp '0600'}
 end
 

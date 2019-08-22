@@ -17,7 +17,3 @@ end
 describe package('libcharon-standard-plugins') do
   it { should be_installed }
 end
-
-describe package('libcharon-extra-pluginss') do
-  it { should be_installed }
-end
